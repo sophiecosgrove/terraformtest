@@ -2,12 +2,18 @@ resource "aws_instance" "instance1" {
   ami                         = var.ami
   instance_type               = var.type
   key_name                    = var.key_name
-  subnet_id                   = aws_subnet.public_subnet.id
+  availability_zone           = var.availability_zone
+  subnet_id                   = var.public_subnet_id
   associate_public_ip_address = var.associate_public_ip_address
 
   tags = {
     Name = "instance1"
   }
+
+  user_data = <<-EOF
+              #!/bin/bash
+              sudo yum update -y
+              EOF
 
 }
 
@@ -15,6 +21,8 @@ resource "aws_instance" "instance2" {
   ami                         = var.ami
   instance_type               = var.type
   key_name                    = var.key_name
+  availability_zone           = var.availability_zone
+  subnet_id                   = var.private_subnet_id
   associate_public_ip_address = var.associate_public_ip_address
 
   tags = {
