@@ -25,3 +25,7 @@ variable "public_subnet_id" {
 variable "private_subnet_id" {
   description = "private subnet id"
 }
+
+variable "security_group_id" {
+  description = "security group id for instance"
+}
