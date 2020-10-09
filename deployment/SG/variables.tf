@@ -1,3 +1,3 @@
 variable "vpc_id" {
-    description = "vpc id for security group"
+  description = "vpc id for security group"
 }
