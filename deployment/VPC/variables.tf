@@ -6,5 +6,4 @@ variable "availability_zone" {
   description = "availability zone"
 }
 
-## change to terraform.tfvars
 

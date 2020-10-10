@@ -4,6 +4,10 @@ provider "aws" {
   shared_credentials_file = "/home/ec2-user/.aws/credentials"
 }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> d7c0fc58b50f19706ce06e1d63377b978282d7b9
 data "aws_availability_zones" "available_zones" {
   state = "available"
 }
