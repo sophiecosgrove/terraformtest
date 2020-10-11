@@ -9,3 +9,4 @@ I deployed the front end using a dockerised flask app. I did this for the purpos
 
 ## File Structure
 ![imageoffilestructure](https://github.com/sophiecosgrove/terraformtest/blob/master/images/Screenshot%202020-10-11%20at%2023.06.00.png)
+
