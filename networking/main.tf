@@ -1,7 +1,14 @@
+resource "aws_internet_gateway" "igw" {
+  vpc_id = var.vpc_id
 
+  tags = {
+    Name = "VPC Internet Gateway"
+  }
+
+}
 resource "aws_security_group" "sg" {
   name        = "allow_web_traffic"
-  description = "allow web inbound http traffic"
+  description = "allow web inbound http traffic to flask app"
   vpc_id      = var.vpc_id
 
   ingress {
@@ -26,6 +33,15 @@ resource "aws_security_group" "sg" {
     description = "SSH"
     from_port   = 22
     to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+
+  }
+
+  ingress {
+    description = "Flask"
+    from_port   = 5000
+    to_port     = 5000
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
 

@@ -1,2 +1,2 @@
 .terraform/
-./deployment/terraform/
+.terraform.tfstate*
