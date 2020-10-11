@@ -1,6 +1,6 @@
 resource "aws_elb" "elastic_load_balancer" {
   name            = "elb"
-  subnets         = var.subnets
+  availability_zones = var.availability_zones
   security_groups = [var.security_group_id]
 
   listener {
@@ -19,7 +19,7 @@ resource "aws_elb" "elastic_load_balancer" {
 
   listener {
     instance_port     = 8000
-    instance_protocol = "http"
+    instance_protocol = "tcp"
     lb_port           = 5000
     lb_protocol       = "tcp"
   }

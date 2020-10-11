@@ -1,3 +1,4 @@
+# route table directing traffic to internet gateway
 resource "aws_route_table" "vpc_rt" {
   vpc_id = var.vpc_id
 
@@ -16,9 +17,9 @@ resource "aws_route_table_association" "rt_public_subnet" {
   route_table_id = aws_route_table.vpc_rt.id
 }
 
+# route table allowing private subnet to connect to the internet
 resource "aws_route_table" "private_nated" {
   vpc_id = var.vpc_id
-  #depends_on = [ aws_route_table_association.private_nated_rt_association]
 
   route {
     cidr_block     = "0.0.0.0/0"

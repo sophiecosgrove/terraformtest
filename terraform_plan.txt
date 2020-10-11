@@ -2,58 +2,28 @@
 The refreshed state will be used to calculate this plan, but will not be
 persisted to local or remote state storage.
 [0m
-[0m[1mdata.aws_availability_zones.available_zones: Refreshing state...[0m
+[0m[1mdata.aws_availability_zones.available_zones: Refreshing state... [id=2020-10-11 21:12:27.300343985 +0000 UTC][0m
+[0m[1maws_vpc.vpc: Refreshing state... [id=vpc-065c41da3bda4b784][0m
+[0m[1mmodule.deployment_multipleAZ[0].module.subnets.aws_subnet.public_subnet: Refreshing state... [id=subnet-0cb52c0df0e679a70][0m
+[0m[1mmodule.networking.aws_internet_gateway.igw: Refreshing state... [id=igw-074a6fcd00ef4fff6][0m
+[0m[1mmodule.deployment_multipleAZ[0].module.nat.aws_eip.nat_gw_eip: Refreshing state... [id=eipalloc-0ce490836213cfcea][0m
 
 ------------------------------------------------------------------------
 
 An execution plan has been generated and is shown below.
 Resource actions are indicated with the following symbols:
   [32m+[0m create
- [36m<=[0m read (data resources)
 [0m
 Terraform will perform the following actions:
-
-[1m  # data.aws_subnet_ids.subnet_ids[0m will be read during apply
-  # (config refers to values not yet known)[0m[0m
-[0m [36m<=[0m[0m data "aws_subnet_ids" "subnet_ids"  {
-      [32m+[0m [0m[1m[0mid[0m[0m     = (known after apply)
-      [32m+[0m [0m[1m[0mids[0m[0m    = (known after apply)
-      [32m+[0m [0m[1m[0mtags[0m[0m   = (known after apply)
-      [32m+[0m [0m[1m[0mvpc_id[0m[0m = (known after apply)
-
-      [32m+[0m [0mfilter {
-          [32m+[0m [0m[1m[0mname[0m[0m   = "tag:Name"
-          [32m+[0m [0m[1m[0mvalues[0m[0m = [
-              [32m+[0m [0m"public_subnet",
-            ]
-        }
-    }
-
-[1m  # aws_vpc.vpc[0m will be created[0m[0m
-[0m  [32m+[0m[0m resource "aws_vpc" "vpc" {
-      [32m+[0m [0m[1m[0marn[0m[0m                              = (known after apply)
-      [32m+[0m [0m[1m[0massign_generated_ipv6_cidr_block[0m[0m = false
-      [32m+[0m [0m[1m[0mcidr_block[0m[0m                       = "10.0.0.0/16"
-      [32m+[0m [0m[1m[0mdefault_network_acl_id[0m[0m           = (known after apply)
-      [32m+[0m [0m[1m[0mdefault_route_table_id[0m[0m           = (known after apply)
-      [32m+[0m [0m[1m[0mdefault_security_group_id[0m[0m        = (known after apply)
-      [32m+[0m [0m[1m[0mdhcp_options_id[0m[0m                  = (known after apply)
-      [32m+[0m [0m[1m[0menable_classiclink[0m[0m               = (known after apply)
-      [32m+[0m [0m[1m[0menable_classiclink_dns_support[0m[0m   = (known after apply)
-      [32m+[0m [0m[1m[0menable_dns_hostnames[0m[0m             = (known after apply)
-      [32m+[0m [0m[1m[0menable_dns_support[0m[0m               = true
-      [32m+[0m [0m[1m[0mid[0m[0m                               = (known after apply)
-      [32m+[0m [0m[1m[0minstance_tenancy[0m[0m                 = "default"
-      [32m+[0m [0m[1m[0mipv6_association_id[0m[0m              = (known after apply)
-      [32m+[0m [0m[1m[0mipv6_cidr_block[0m[0m                  = (known after apply)
-      [32m+[0m [0m[1m[0mmain_route_table_id[0m[0m              = (known after apply)
-      [32m+[0m [0m[1m[0mowner_id[0m[0m                         = (known after apply)
-    }
 
 [1m  # module.elastic_load_balancer.aws_elb.elastic_load_balancer[0m will be created[0m[0m
 [0m  [32m+[0m[0m resource "aws_elb" "elastic_load_balancer" {
       [32m+[0m [0m[1m[0marn[0m[0m                         = (known after apply)
-      [32m+[0m [0m[1m[0mavailability_zones[0m[0m          = (known after apply)
+      [32m+[0m [0m[1m[0mavailability_zones[0m[0m          = [
+          [32m+[0m [0m"eu-west-1a",
+          [32m+[0m [0m"eu-west-1b",
+          [32m+[0m [0m"eu-west-1c",
+        ]
       [32m+[0m [0m[1m[0mconnection_draining[0m[0m         = true
       [32m+[0m [0m[1m[0mconnection_draining_timeout[0m[0m = 400
       [32m+[0m [0m[1m[0mcross_zone_load_balancing[0m[0m   = true
@@ -89,26 +59,15 @@ Terraform will perform the following actions:
       [32m+[0m [0mlistener {
           [32m+[0m [0m[1m[0minstance_port[0m[0m     = 8000
           [32m+[0m [0m[1m[0minstance_protocol[0m[0m = "http"
-          [32m+[0m [0m[1m[0mlb_port[0m[0m           = 5000
-          [32m+[0m [0m[1m[0mlb_protocol[0m[0m       = "tcp"
-        }
-      [32m+[0m [0mlistener {
-          [32m+[0m [0m[1m[0minstance_port[0m[0m     = 8000
-          [32m+[0m [0m[1m[0minstance_protocol[0m[0m = "http"
           [32m+[0m [0m[1m[0mlb_port[0m[0m           = 80
           [32m+[0m [0m[1m[0mlb_protocol[0m[0m       = "http"
         }
-    }
-
-[1m  # module.networking.aws_internet_gateway.igw[0m will be created[0m[0m
-[0m  [32m+[0m[0m resource "aws_internet_gateway" "igw" {
-      [32m+[0m [0m[1m[0marn[0m[0m      = (known after apply)
-      [32m+[0m [0m[1m[0mid[0m[0m       = (known after apply)
-      [32m+[0m [0m[1m[0mowner_id[0m[0m = (known after apply)
-      [32m+[0m [0m[1m[0mtags[0m[0m     = {
-          [32m+[0m [0m"Name" = "VPC Internet Gateway"
+      [32m+[0m [0mlistener {
+          [32m+[0m [0m[1m[0minstance_port[0m[0m     = 8000
+          [32m+[0m [0m[1m[0minstance_protocol[0m[0m = "tcp"
+          [32m+[0m [0m[1m[0mlb_port[0m[0m           = 5000
+          [32m+[0m [0m[1m[0mlb_protocol[0m[0m       = "tcp"
         }
-      [32m+[0m [0m[1m[0mvpc_id[0m[0m   = (known after apply)
     }
 
 [1m  # module.networking.aws_security_group.sg[0m will be created[0m[0m
@@ -188,34 +147,90 @@ Terraform will perform the following actions:
       [32m+[0m [0m[1m[0mname[0m[0m                   = "allow_web_traffic"
       [32m+[0m [0m[1m[0mowner_id[0m[0m               = (known after apply)
       [32m+[0m [0m[1m[0mrevoke_rules_on_delete[0m[0m = false
-      [32m+[0m [0m[1m[0mvpc_id[0m[0m                 = (known after apply)
+      [32m+[0m [0m[1m[0mvpc_id[0m[0m                 = "vpc-065c41da3bda4b784"
     }
 
-[1m  # module.deployment_multipleAZ[0].module.nat.aws_eip.nat_gw_eip[0m will be created[0m[0m
-[0m  [32m+[0m[0m resource "aws_eip" "nat_gw_eip" {
-      [32m+[0m [0m[1m[0mallocation_id[0m[0m     = (known after apply)
-      [32m+[0m [0m[1m[0massociation_id[0m[0m    = (known after apply)
-      [32m+[0m [0m[1m[0mcustomer_owned_ip[0m[0m = (known after apply)
-      [32m+[0m [0m[1m[0mdomain[0m[0m            = (known after apply)
-      [32m+[0m [0m[1m[0mid[0m[0m                = (known after apply)
-      [32m+[0m [0m[1m[0minstance[0m[0m          = (known after apply)
-      [32m+[0m [0m[1m[0mnetwork_interface[0m[0m = (known after apply)
-      [32m+[0m [0m[1m[0mprivate_dns[0m[0m       = (known after apply)
-      [32m+[0m [0m[1m[0mprivate_ip[0m[0m        = (known after apply)
-      [32m+[0m [0m[1m[0mpublic_dns[0m[0m        = (known after apply)
-      [32m+[0m [0m[1m[0mpublic_ip[0m[0m         = (known after apply)
-      [32m+[0m [0m[1m[0mpublic_ipv4_pool[0m[0m  = (known after apply)
-      [32m+[0m [0m[1m[0mvpc[0m[0m               = true
+[1m  # module.networking.aws_security_group.sg_priv[0m will be created[0m[0m
+[0m  [32m+[0m[0m resource "aws_security_group" "sg_priv" {
+      [32m+[0m [0m[1m[0marn[0m[0m                    = (known after apply)
+      [32m+[0m [0m[1m[0mdescription[0m[0m            = "private subnet sg"
+      [32m+[0m [0m[1m[0megress[0m[0m                 = [
+          [32m+[0m [0m{
+              [32m+[0m [0mcidr_blocks      = [
+                  [32m+[0m [0m"0.0.0.0/0",
+                ]
+              [32m+[0m [0mdescription      = ""
+              [32m+[0m [0mfrom_port        = 0
+              [32m+[0m [0mipv6_cidr_blocks = []
+              [32m+[0m [0mprefix_list_ids  = []
+              [32m+[0m [0mprotocol         = "-1"
+              [32m+[0m [0msecurity_groups  = []
+              [32m+[0m [0mself             = false
+              [32m+[0m [0mto_port          = 0
+            },
+        ]
+      [32m+[0m [0m[1m[0mid[0m[0m                     = (known after apply)
+      [32m+[0m [0m[1m[0mingress[0m[0m                = [
+          [32m+[0m [0m{
+              [32m+[0m [0mcidr_blocks      = [
+                  [32m+[0m [0m"10.0.0.0/24",
+                  [32m+[0m [0m"10.0.2.0/24",
+                  [32m+[0m [0m"10.0.4.0/24",
+                ]
+              [32m+[0m [0mdescription      = "HTTP"
+              [32m+[0m [0mfrom_port        = 80
+              [32m+[0m [0mipv6_cidr_blocks = []
+              [32m+[0m [0mprefix_list_ids  = []
+              [32m+[0m [0mprotocol         = "tcp"
+              [32m+[0m [0msecurity_groups  = []
+              [32m+[0m [0mself             = false
+              [32m+[0m [0mto_port          = 80
+            },
+          [32m+[0m [0m{
+              [32m+[0m [0mcidr_blocks      = [
+                  [32m+[0m [0m"10.0.0.0/24",
+                  [32m+[0m [0m"10.0.2.0/24",
+                  [32m+[0m [0m"10.0.4.0/24",
+                ]
+              [32m+[0m [0mdescription      = "HTTPS"
+              [32m+[0m [0mfrom_port        = 443
+              [32m+[0m [0mipv6_cidr_blocks = []
+              [32m+[0m [0mprefix_list_ids  = []
+              [32m+[0m [0mprotocol         = "tcp"
+              [32m+[0m [0msecurity_groups  = []
+              [32m+[0m [0mself             = false
+              [32m+[0m [0mto_port          = 443
+            },
+          [32m+[0m [0m{
+              [32m+[0m [0mcidr_blocks      = [
+                  [32m+[0m [0m"10.0.0.0/24",
+                  [32m+[0m [0m"10.0.2.0/24",
+                  [32m+[0m [0m"10.0.4.0/24",
+                ]
+              [32m+[0m [0mdescription      = "SSH"
+              [32m+[0m [0mfrom_port        = 22
+              [32m+[0m [0mipv6_cidr_blocks = []
+              [32m+[0m [0mprefix_list_ids  = []
+              [32m+[0m [0mprotocol         = "tcp"
+              [32m+[0m [0msecurity_groups  = []
+              [32m+[0m [0mself             = false
+              [32m+[0m [0mto_port          = 22
+            },
+        ]
+      [32m+[0m [0m[1m[0mname[0m[0m                   = "private subnet sg"
+      [32m+[0m [0m[1m[0mowner_id[0m[0m               = (known after apply)
+      [32m+[0m [0m[1m[0mrevoke_rules_on_delete[0m[0m = false
+      [32m+[0m [0m[1m[0mvpc_id[0m[0m                 = "vpc-065c41da3bda4b784"
     }
 
 [1m  # module.deployment_multipleAZ[0].module.nat.aws_nat_gateway.nat_gateway[0m will be created[0m[0m
 [0m  [32m+[0m[0m resource "aws_nat_gateway" "nat_gateway" {
-      [32m+[0m [0m[1m[0mallocation_id[0m[0m        = (known after apply)
+      [32m+[0m [0m[1m[0mallocation_id[0m[0m        = "eipalloc-0ce490836213cfcea"
       [32m+[0m [0m[1m[0mid[0m[0m                   = (known after apply)
       [32m+[0m [0m[1m[0mnetwork_interface_id[0m[0m = (known after apply)
       [32m+[0m [0m[1m[0mprivate_ip[0m[0m           = (known after apply)
       [32m+[0m [0m[1m[0mpublic_ip[0m[0m            = (known after apply)
-      [32m+[0m [0m[1m[0msubnet_id[0m[0m            = (known after apply)
+      [32m+[0m [0m[1m[0msubnet_id[0m[0m            = "subnet-0cb52c0df0e679a70"
     }
 
 [1m  # module.deployment_multipleAZ[0].module.route_table.aws_route_table.private_nated[0m will be created[0m[0m
@@ -240,7 +255,7 @@ Terraform will perform the following actions:
       [32m+[0m [0m[1m[0mtags[0m[0m             = {
           [32m+[0m [0m"Name" = "Main Route Table for NAT-ed subnet"
         }
-      [32m+[0m [0m[1m[0mvpc_id[0m[0m           = (known after apply)
+      [32m+[0m [0m[1m[0mvpc_id[0m[0m           = "vpc-065c41da3bda4b784"
     }
 
 [1m  # module.deployment_multipleAZ[0].module.route_table.aws_route_table.vpc_rt[0m will be created[0m[0m
@@ -252,7 +267,7 @@ Terraform will perform the following actions:
           [32m+[0m [0m{
               [32m+[0m [0mcidr_block                = "0.0.0.0/0"
               [32m+[0m [0megress_only_gateway_id    = ""
-              [32m+[0m [0mgateway_id                = (known after apply)
+              [32m+[0m [0mgateway_id                = "igw-074a6fcd00ef4fff6"
               [32m+[0m [0minstance_id               = ""
               [32m+[0m [0mipv6_cidr_block           = ""
               [32m+[0m [0mlocal_gateway_id          = ""
@@ -265,21 +280,21 @@ Terraform will perform the following actions:
       [32m+[0m [0m[1m[0mtags[0m[0m             = {
           [32m+[0m [0m"Name" = "Route Table for VPC"
         }
-      [32m+[0m [0m[1m[0mvpc_id[0m[0m           = (known after apply)
+      [32m+[0m [0m[1m[0mvpc_id[0m[0m           = "vpc-065c41da3bda4b784"
     }
 
 [1m  # module.deployment_multipleAZ[0].module.route_table.aws_route_table_association.private_nated_rt_association[0m will be created[0m[0m
 [0m  [32m+[0m[0m resource "aws_route_table_association" "private_nated_rt_association" {
       [32m+[0m [0m[1m[0mid[0m[0m             = (known after apply)
       [32m+[0m [0m[1m[0mroute_table_id[0m[0m = (known after apply)
-      [32m+[0m [0m[1m[0msubnet_id[0m[0m      = (known after apply)
+      [32m+[0m [0m[1m[0msubnet_id[0m[0m      = "subnet-0cb52c0df0e679a70"
     }
 
 [1m  # module.deployment_multipleAZ[0].module.route_table.aws_route_table_association.rt_public_subnet[0m will be created[0m[0m
 [0m  [32m+[0m[0m resource "aws_route_table_association" "rt_public_subnet" {
       [32m+[0m [0m[1m[0mid[0m[0m             = (known after apply)
       [32m+[0m [0m[1m[0mroute_table_id[0m[0m = (known after apply)
-      [32m+[0m [0m[1m[0msubnet_id[0m[0m      = (known after apply)
+      [32m+[0m [0m[1m[0msubnet_id[0m[0m      = "subnet-0cb52c0df0e679a70"
     }
 
 [1m  # module.deployment_multipleAZ[0].module.subnets.aws_instance.instance1[0m will be created[0m[0m
@@ -309,7 +324,7 @@ Terraform will perform the following actions:
       [32m+[0m [0m[1m[0msecondary_private_ips[0m[0m        = (known after apply)
       [32m+[0m [0m[1m[0msecurity_groups[0m[0m              = (known after apply)
       [32m+[0m [0m[1m[0msource_dest_check[0m[0m            = true
-      [32m+[0m [0m[1m[0msubnet_id[0m[0m                    = (known after apply)
+      [32m+[0m [0m[1m[0msubnet_id[0m[0m                    = "subnet-0cb52c0df0e679a70"
       [32m+[0m [0m[1m[0mtags[0m[0m                         = {
           [32m+[0m [0m"Name" = "instance1"
         }
@@ -451,24 +466,7 @@ Terraform will perform the following actions:
       [32m+[0m [0m[1m[0mtags[0m[0m                            = {
           [32m+[0m [0m"Name" = "private_subnet"
         }
-      [32m+[0m [0m[1m[0mvpc_id[0m[0m                          = (known after apply)
-    }
-
-[1m  # module.deployment_multipleAZ[0].module.subnets.aws_subnet.public_subnet[0m will be created[0m[0m
-[0m  [32m+[0m[0m resource "aws_subnet" "public_subnet" {
-      [32m+[0m [0m[1m[0marn[0m[0m                             = (known after apply)
-      [32m+[0m [0m[1m[0massign_ipv6_address_on_creation[0m[0m = false
-      [32m+[0m [0m[1m[0mavailability_zone[0m[0m               = "eu-west-1a"
-      [32m+[0m [0m[1m[0mavailability_zone_id[0m[0m            = (known after apply)
-      [32m+[0m [0m[1m[0mcidr_block[0m[0m                      = "10.0.0.0/24"
-      [32m+[0m [0m[1m[0mid[0m[0m                              = (known after apply)
-      [32m+[0m [0m[1m[0mipv6_cidr_block_association_id[0m[0m  = (known after apply)
-      [32m+[0m [0m[1m[0mmap_public_ip_on_launch[0m[0m         = true
-      [32m+[0m [0m[1m[0mowner_id[0m[0m                        = (known after apply)
-      [32m+[0m [0m[1m[0mtags[0m[0m                            = {
-          [32m+[0m [0m"Name" = "public_subnet"
-        }
-      [32m+[0m [0m[1m[0mvpc_id[0m[0m                          = (known after apply)
+      [32m+[0m [0m[1m[0mvpc_id[0m[0m                          = "vpc-065c41da3bda4b784"
     }
 
 [1m  # module.deployment_multipleAZ[1].module.nat.aws_eip.nat_gw_eip[0m will be created[0m[0m
@@ -520,7 +518,7 @@ Terraform will perform the following actions:
       [32m+[0m [0m[1m[0mtags[0m[0m             = {
           [32m+[0m [0m"Name" = "Main Route Table for NAT-ed subnet"
         }
-      [32m+[0m [0m[1m[0mvpc_id[0m[0m           = (known after apply)
+      [32m+[0m [0m[1m[0mvpc_id[0m[0m           = "vpc-065c41da3bda4b784"
     }
 
 [1m  # module.deployment_multipleAZ[1].module.route_table.aws_route_table.vpc_rt[0m will be created[0m[0m
@@ -532,7 +530,7 @@ Terraform will perform the following actions:
           [32m+[0m [0m{
               [32m+[0m [0mcidr_block                = "0.0.0.0/0"
               [32m+[0m [0megress_only_gateway_id    = ""
-              [32m+[0m [0mgateway_id                = (known after apply)
+              [32m+[0m [0mgateway_id                = "igw-074a6fcd00ef4fff6"
               [32m+[0m [0minstance_id               = ""
               [32m+[0m [0mipv6_cidr_block           = ""
               [32m+[0m [0mlocal_gateway_id          = ""
@@ -545,7 +543,7 @@ Terraform will perform the following actions:
       [32m+[0m [0m[1m[0mtags[0m[0m             = {
           [32m+[0m [0m"Name" = "Route Table for VPC"
         }
-      [32m+[0m [0m[1m[0mvpc_id[0m[0m           = (known after apply)
+      [32m+[0m [0m[1m[0mvpc_id[0m[0m           = "vpc-065c41da3bda4b784"
     }
 
 [1m  # module.deployment_multipleAZ[1].module.route_table.aws_route_table_association.private_nated_rt_association[0m will be created[0m[0m
@@ -723,7 +721,7 @@ Terraform will perform the following actions:
       [32m+[0m [0m[1m[0massign_ipv6_address_on_creation[0m[0m = false
       [32m+[0m [0m[1m[0mavailability_zone[0m[0m               = "eu-west-1b"
       [32m+[0m [0m[1m[0mavailability_zone_id[0m[0m            = (known after apply)
-      [32m+[0m [0m[1m[0mcidr_block[0m[0m                      = "10.0.1.0/24"
+      [32m+[0m [0m[1m[0mcidr_block[0m[0m                      = "10.0.3.0/24"
       [32m+[0m [0m[1m[0mid[0m[0m                              = (known after apply)
       [32m+[0m [0m[1m[0mipv6_cidr_block_association_id[0m[0m  = (known after apply)
       [32m+[0m [0m[1m[0mmap_public_ip_on_launch[0m[0m         = false
@@ -731,7 +729,7 @@ Terraform will perform the following actions:
       [32m+[0m [0m[1m[0mtags[0m[0m                            = {
           [32m+[0m [0m"Name" = "private_subnet"
         }
-      [32m+[0m [0m[1m[0mvpc_id[0m[0m                          = (known after apply)
+      [32m+[0m [0m[1m[0mvpc_id[0m[0m                          = "vpc-065c41da3bda4b784"
     }
 
 [1m  # module.deployment_multipleAZ[1].module.subnets.aws_subnet.public_subnet[0m will be created[0m[0m
@@ -740,7 +738,7 @@ Terraform will perform the following actions:
       [32m+[0m [0m[1m[0massign_ipv6_address_on_creation[0m[0m = false
       [32m+[0m [0m[1m[0mavailability_zone[0m[0m               = "eu-west-1b"
       [32m+[0m [0m[1m[0mavailability_zone_id[0m[0m            = (known after apply)
-      [32m+[0m [0m[1m[0mcidr_block[0m[0m                      = "10.0.0.0/24"
+      [32m+[0m [0m[1m[0mcidr_block[0m[0m                      = "10.0.2.0/24"
       [32m+[0m [0m[1m[0mid[0m[0m                              = (known after apply)
       [32m+[0m [0m[1m[0mipv6_cidr_block_association_id[0m[0m  = (known after apply)
       [32m+[0m [0m[1m[0mmap_public_ip_on_launch[0m[0m         = true
@@ -748,7 +746,7 @@ Terraform will perform the following actions:
       [32m+[0m [0m[1m[0mtags[0m[0m                            = {
           [32m+[0m [0m"Name" = "public_subnet"
         }
-      [32m+[0m [0m[1m[0mvpc_id[0m[0m                          = (known after apply)
+      [32m+[0m [0m[1m[0mvpc_id[0m[0m                          = "vpc-065c41da3bda4b784"
     }
 
 [1m  # module.deployment_multipleAZ[2].module.nat.aws_eip.nat_gw_eip[0m will be created[0m[0m
@@ -800,7 +798,7 @@ Terraform will perform the following actions:
       [32m+[0m [0m[1m[0mtags[0m[0m             = {
           [32m+[0m [0m"Name" = "Main Route Table for NAT-ed subnet"
         }
-      [32m+[0m [0m[1m[0mvpc_id[0m[0m           = (known after apply)
+      [32m+[0m [0m[1m[0mvpc_id[0m[0m           = "vpc-065c41da3bda4b784"
     }
 
 [1m  # module.deployment_multipleAZ[2].module.route_table.aws_route_table.vpc_rt[0m will be created[0m[0m
@@ -812,7 +810,7 @@ Terraform will perform the following actions:
           [32m+[0m [0m{
               [32m+[0m [0mcidr_block                = "0.0.0.0/0"
               [32m+[0m [0megress_only_gateway_id    = ""
-              [32m+[0m [0mgateway_id                = (known after apply)
+              [32m+[0m [0mgateway_id                = "igw-074a6fcd00ef4fff6"
               [32m+[0m [0minstance_id               = ""
               [32m+[0m [0mipv6_cidr_block           = ""
               [32m+[0m [0mlocal_gateway_id          = ""
@@ -825,7 +823,7 @@ Terraform will perform the following actions:
       [32m+[0m [0m[1m[0mtags[0m[0m             = {
           [32m+[0m [0m"Name" = "Route Table for VPC"
         }
-      [32m+[0m [0m[1m[0mvpc_id[0m[0m           = (known after apply)
+      [32m+[0m [0m[1m[0mvpc_id[0m[0m           = "vpc-065c41da3bda4b784"
     }
 
 [1m  # module.deployment_multipleAZ[2].module.route_table.aws_route_table_association.private_nated_rt_association[0m will be created[0m[0m
@@ -1003,7 +1001,7 @@ Terraform will perform the following actions:
       [32m+[0m [0m[1m[0massign_ipv6_address_on_creation[0m[0m = false
       [32m+[0m [0m[1m[0mavailability_zone[0m[0m               = "eu-west-1c"
       [32m+[0m [0m[1m[0mavailability_zone_id[0m[0m            = (known after apply)
-      [32m+[0m [0m[1m[0mcidr_block[0m[0m                      = "10.0.1.0/24"
+      [32m+[0m [0m[1m[0mcidr_block[0m[0m                      = "10.0.5.0/24"
       [32m+[0m [0m[1m[0mid[0m[0m                              = (known after apply)
       [32m+[0m [0m[1m[0mipv6_cidr_block_association_id[0m[0m  = (known after apply)
       [32m+[0m [0m[1m[0mmap_public_ip_on_launch[0m[0m         = false
@@ -1011,7 +1009,7 @@ Terraform will perform the following actions:
       [32m+[0m [0m[1m[0mtags[0m[0m                            = {
           [32m+[0m [0m"Name" = "private_subnet"
         }
-      [32m+[0m [0m[1m[0mvpc_id[0m[0m                          = (known after apply)
+      [32m+[0m [0m[1m[0mvpc_id[0m[0m                          = "vpc-065c41da3bda4b784"
     }
 
 [1m  # module.deployment_multipleAZ[2].module.subnets.aws_subnet.public_subnet[0m will be created[0m[0m
@@ -1020,7 +1018,7 @@ Terraform will perform the following actions:
       [32m+[0m [0m[1m[0massign_ipv6_address_on_creation[0m[0m = false
       [32m+[0m [0m[1m[0mavailability_zone[0m[0m               = "eu-west-1c"
       [32m+[0m [0m[1m[0mavailability_zone_id[0m[0m            = (known after apply)
-      [32m+[0m [0m[1m[0mcidr_block[0m[0m                      = "10.0.0.0/24"
+      [32m+[0m [0m[1m[0mcidr_block[0m[0m                      = "10.0.4.0/24"
       [32m+[0m [0m[1m[0mid[0m[0m                              = (known after apply)
       [32m+[0m [0m[1m[0mipv6_cidr_block_association_id[0m[0m  = (known after apply)
       [32m+[0m [0m[1m[0mmap_public_ip_on_launch[0m[0m         = true
@@ -1028,10 +1026,10 @@ Terraform will perform the following actions:
       [32m+[0m [0m[1m[0mtags[0m[0m                            = {
           [32m+[0m [0m"Name" = "public_subnet"
         }
-      [32m+[0m [0m[1m[0mvpc_id[0m[0m                          = (known after apply)
+      [32m+[0m [0m[1m[0mvpc_id[0m[0m                          = "vpc-065c41da3bda4b784"
     }
 
-[0m[1mPlan:[0m 34 to add, 0 to change, 0 to destroy.[0m
+[0m[1mPlan:[0m 31 to add, 0 to change, 0 to destroy.[0m
 
 ------------------------------------------------------------------------
 

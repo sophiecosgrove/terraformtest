@@ -9,3 +9,7 @@ output "internet_gateway" {
 output "security_group_id" {
   value = aws_security_group.sg.id
 }
+ 
+ output "security_group_id_priv" {
+    value = aws_security_group.sg_priv.id
+ }

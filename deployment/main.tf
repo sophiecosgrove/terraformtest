@@ -3,7 +3,10 @@ module "subnets" {
   vpc_id                          = var.vpc_id
   availability_zone               = var.availability_zone
   security_group_id               = var.security_group_id
+  security_group_id_priv          = var.security_group_id_priv
   private_nated_rt_association_id = module.route_table.private_nated_rt_association_id
+  subnet_cidr_blocks_priv         = var.subnet_cidr_blocks_priv
+  subnet_cidr_blocks_pub          = var.subnet_cidr_blocks_pub
 }
 
 module "nat" {

@@ -2,10 +2,13 @@ variable "vpc_id" {
   description = "vpc id for subnets"
 }
 
-variable "subnet_cidr_blocks" {
-  default = ["10.0.0.0/24", "10.0.1.0/24"]
+variable "subnet_cidr_blocks_pub" {
+  description = "cidr blocks for subnets"
 }
 
+variable "subnet_cidr_blocks_priv" {
+  description = "cidr blocks for subnets"
+}
 variable "availability_zone" {
   description = "availability zone"
 }
@@ -27,6 +30,10 @@ variable "associate_public_ip_address" {
 }
 
 variable "security_group_id" {
+  description = "security group id for instance"
+}
+
+variable "security_group_id_priv" {
   description = "security group id for instance"
 }
 
