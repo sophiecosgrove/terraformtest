@@ -14,5 +14,7 @@ I deployed the front end using a dockerised flask app. I did this for the purpos
 - terraform init
 - terraform plan
 - terraform apply
+
+## Execution
 ![imageofplan](https://github.com/sophiecosgrove/terraformtest/blob/master/images/Screenshot%202020-10-11%20at%2023.13.09.png)
 
