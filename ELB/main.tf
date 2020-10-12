@@ -12,13 +12,6 @@ resource "aws_elb" "elastic_load_balancer" {
 
   listener {
     instance_port     = 8000
-    instance_protocol = "http"
-    lb_port           = 443
-    lb_protocol       = "https"
-  }
-
-  listener {
-    instance_port     = 8000
     instance_protocol = "tcp"
     lb_port           = 5000
     lb_protocol       = "tcp"
