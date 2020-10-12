@@ -26,6 +26,7 @@ resource "aws_elb" "elastic_load_balancer" {
     interval            = 30
   }
 
+
   cross_zone_load_balancing   = true
   idle_timeout                = 400
   connection_draining         = true
