@@ -8,61 +8,36 @@ data "aws_availability_zones" "available_zones" {
   state = "available"
 }
 
-data "aws_subnet_ids" "subnet_ids" {
-  vpc_id = aws_vpc.vpc.id
-}
-
+# Private and public subnets and instances replicated accross all availability zones along with NAT gateways and route tables
 module "deployment_multipleAZ" {
-  source = "./deployment"
-  count = length(data.aws_availability_zones.available_zones.names)
-  availability_zone = data.aws_availability_zones.available_zones.names[count.index]
-  vpc_id = aws_vpc.vpc.id
+  source                  = "./deployment"
+  count                   = length(data.aws_availability_zones.available_zones.names)
+  availability_zone       = data.aws_availability_zones.available_zones.names[count.index]
+  vpc_id                  = aws_vpc.vpc.id
+  security_group_id       = module.networking.security_group_id
+  security_group_id_priv  = module.networking.security_group_id_priv
+  internet_gateway_id     = module.networking.internet_gateway_id
+  internet_gateway        = module.networking.internet_gateway
+  subnet_cidr_blocks_pub  = var.cidr_block_pub[count.index]
+  subnet_cidr_blocks_priv = var.cidr_block_priv[count.index]
 }
 
 resource "aws_vpc" "vpc" {
   cidr_block = var.vpc_cidr
 }
 
-resource "aws_elb" "elastic_load_balancer" {
-  name               = "elb"
-  subnets = data.aws_subnet_ids.subnet_ids.*.id
-
-  access_logs {
-    bucket        = "foo"
-    bucket_prefix = "bar"
-    interval      = 60
-  }
-
-  listener {
-    instance_port     = 8000
-    instance_protocol = "http"
-    lb_port           = 80
-    lb_protocol       = "http"
-  }
-
-  listener {
-    instance_port      = 8000
-    instance_protocol  = "http"
-    lb_port            = 443
-    lb_protocol        = "https"
-  }
-
-  health_check {
-    healthy_threshold   = 2
-    unhealthy_threshold = 2
-    timeout             = 3
-    target              = "HTTP:8000/"
-    interval            = 30
-  }
-
-  cross_zone_load_balancing   = true
-  idle_timeout                = 400
-  connection_draining         = true
-  connection_draining_timeout = 400
-
-  tags = {
-    Name = "foobar-terraform-elb"
-  }
+# security group and internet gateway for all subnets and instances
+module "networking" {
+  source         = "./networking"
+  vpc_id         = aws_vpc.vpc.id
+  cidr_block_pub = var.cidr_block_pub
 }
 
+
+module "elastic_load_balancer" {
+  source             = "./ELB"
+  availability_zones = data.aws_availability_zones.available_zones.names
+  security_group_id  = module.networking.security_group_id
+
+}
 
