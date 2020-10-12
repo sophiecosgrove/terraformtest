@@ -1,7 +1,31 @@
+provider "aws" {
+
+  region                  = "eu-west-1"
+  shared_credentials_file = "/home/ec2-user/.aws/credentials"
+}
+
+data "aws_instances" "elb-instance-ids" {
+  filter {
+      name = "tag:Name"
+      values = ["instance1"]
+    }
+}
+
+data "aws_security_groups" "elb-security-group-id"{
+  filter {
+    name = "allow_web_traffic"
+
+  }
+}
+
+data "aws_availability_zones" "available_zones" {
+  state = "available"
+}
+
 resource "aws_elb" "elastic_load_balancer" {
   name            = "elb"
-  availability_zones = var.availability_zones
-  security_groups = [var.security_group_id]
+  availability_zones = data.aws_availability_zones.available_zones.*.name
+  security_groups = [data.aws_security_groups.elb-security-group-id.id]
 
   listener {
     instance_port     = 8000
@@ -33,6 +57,7 @@ resource "aws_elb" "elastic_load_balancer" {
     interval            = 30
   }
 
+  instances = [data.aws_instances.elb-instance-ids]
   cross_zone_load_balancing   = true
   idle_timeout                = 400
   connection_draining         = true

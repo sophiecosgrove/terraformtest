@@ -34,10 +34,10 @@ module "networking" {
 }
 
 
-module "elastic_load_balancer" {
+/*module "elastic_load_balancer" {
   source             = "./ELB"
   availability_zones = data.aws_availability_zones.available_zones.names
   security_group_id  = module.networking.security_group_id
 
-}
+}*/
 
