@@ -13,7 +13,8 @@ data "aws_instances" "elb-instance-ids" {
 
 data "aws_security_groups" "elb-security-group-id"{
   filter {
-    name = "allow_web_traffic"
+    name = "group-name"
+    values = ["allow_web_traffic"]
 
   }
 }
@@ -24,7 +25,7 @@ data "aws_availability_zones" "available_zones" {
 
 resource "aws_elb" "elastic_load_balancer" {
   name            = "elb"
-  availability_zones = data.aws_availability_zones.available_zones.*.name
+  availability_zones = data.aws_availability_zones.available_zones.names
   security_groups = [data.aws_security_groups.elb-security-group-id.id]
 
   listener {
@@ -57,7 +58,7 @@ resource "aws_elb" "elastic_load_balancer" {
     interval            = 30
   }
 
-  instances = [data.aws_instances.elb-instance-ids]
+  instances = data.aws_instances.elb-instance-ids.*.id
   cross_zone_load_balancing   = true
   idle_timeout                = 400
   connection_draining         = true
