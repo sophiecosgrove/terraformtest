@@ -1,4 +1,5 @@
 # AWS infrastructure with Terraform
+# For alternative approach using AWS autoscaling, see autoscaling branch
 
 ## Cloud Infrastructure
 ![imageofinfrastructure](https://github.com/sophiecosgrove/terraformtest/blob/master/images/Screenshot%202020-10-11%20at%2022.16.20.png)
