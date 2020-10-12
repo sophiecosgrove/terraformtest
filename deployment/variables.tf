@@ -1,31 +1,11 @@
-variable "availability_zone" {
-  description = "availability_zone"
+variable "cidr_block_pub" {
+  default = ["10.0.0.0/24", "10.0.2.0/24", "10.0.4.0/24", ]
 }
 
-variable "vpc_id" {
-  description = "vpc id"
+variable "cidr_block_priv" {
+  default = ["10.0.1.0/24", "10.0.3.0/24", "10.0.5.0/24"]
 }
 
-variable "security_group_id" {
-  description = "security group id"
-}
-
-variable "security_group_id_priv" {
-  description = "security group id for instance"
-}
-
-variable "internet_gateway_id" {
-  description = "internet gateway id"
-}
-
-variable "internet_gateway" {
-  description = "internet gateway"
-}
-
-variable "subnet_cidr_blocks_pub" {
-  description = "cidr blocks for subnets"
-}
-
-variable "subnet_cidr_blocks_priv" {
-  description = "cidr blocks for subnets"
+variable "vpc_cidr" {
+  default = "10.0.0.0/16"
 }

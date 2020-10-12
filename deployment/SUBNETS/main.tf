@@ -19,40 +19,52 @@ resource "aws_subnet" "private_subnet" {
   }
 }
 
-# instance which hosts front end
-resource "aws_instance" "instance1" {
-  ami                         = var.ami
-  instance_type               = var.type
-  key_name                    = var.key_name
-  availability_zone           = var.availability_zone
-  subnet_id                   = aws_subnet.public_subnet.id
-  associate_public_ip_address = var.associate_public_ip_address
-  vpc_security_group_ids      = [var.security_group_id]
-
-  tags = {
-    Name = "instance1"
-  }
-
-  user_data = <<-EOF
-              #!/bin/bash
-              sudo yum update -y
-              sudo yum install docker -y
-              sudo service docker start
-              sudo docker run -p 5000:5000 -d name frontendflask sophiec0s/frontend:latest
-              EOF
-
+# NAT gateway in public subnet
+resource "aws_nat_gateway" "nat_gateway" {
+  allocation_id = aws_eip.nat_gw_eip.id
+  subnet_id     = aws_subnet.public_subnet.id
+  depends_on    = [var.internet_gateway]
 }
 
-# private instance for maintenance
-resource "aws_instance" "instance2" {
-  ami                    = var.ami
-  instance_type          = var.type
-  key_name               = var.key_name
-  availability_zone      = var.availability_zone
-  subnet_id              = aws_subnet.private_subnet.id
-  vpc_security_group_ids = [var.security_group_id_priv]
+resource "aws_eip" "nat_gw_eip" {
+  vpc        = true
+  depends_on = [var.internet_gateway]
+}
+
+# route table directing traffic to internet gateway
+resource "aws_route_table" "vpc_rt" {
+  vpc_id = var.vpc_id
+
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = var.internet_gateway_id
+  }
 
   tags = {
-    Name = "instance2"
+    Name = "Route Table for VPC"
   }
+}
+
+resource "aws_route_table_association" "rt_public_subnet" {
+  subnet_id      = aws_subnet.public_subnet.id
+  route_table_id = aws_route_table.vpc_rt.id
+}
+
+# route table allowing private subnet to connect to the internet
+resource "aws_route_table" "private_nated" {
+  vpc_id = var.vpc_id
+
+  route {
+    cidr_block     = "0.0.0.0/0"
+    nat_gateway_id = aws_nat_gateway.nat_gateway.id
+  }
+
+  tags = {
+    Name = "Main Route Table for NAT-ed subnet"
+  }
+}
+
+resource "aws_route_table_association" "private_nated_rt_association" {
+  subnet_id      = aws_subnet.private_subnet.id
+  route_table_id = aws_route_table.private_nated.id
 }

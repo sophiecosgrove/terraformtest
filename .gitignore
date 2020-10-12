@@ -1,5 +1,3 @@
-.terraform/
-.terraform.tfstate*
-./ELB/terraform/
-./ELB/.terraform.tfstate*
+./deployment/terraform/
+./deployment/.terraform.tfstate*
 
